@@ -90,7 +90,7 @@ CREATE TABLE booking (
     movie VARCHAR(60) NOT NULL,
     date_reservation DATETIME NOT NULL,
     type_payment VARCHAR(20),
-    total_price INT(11) NOT NULL,
+    total_price DECIMAL(4,2) NOT NULL,
     date_payment DATETIME NOT NULL,
     place_quantity INT(11) NOT NULL,
     projections_id INT(11) NOT NULL,
@@ -161,9 +161,8 @@ insert into movies (title, duration, release_date, synopsis, directed_by, projec
 
 
 
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('Too Late the Hero', '2023/05/11', 'Nelco Laboratories, Inc.', 'PF', '2023/02/03', 1);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('Breath, The (Nefes: Vatan sagolsun)', '2023/06/11', 'Banner Pharmacaps Inc', 'US', '2023/02/03', 2);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('300', '2023/07/11', 'Mycone Dental Supply Co., Inc DBA Keystone Industries and Deepak Products Inc.', 'TW', '2023/02/03', 3);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('Pope''s Toilet', '2023/08/11', 'Cardinal Health Inc.', 'CA', '2023/02/03', 4);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('Sleeping Car Murder', '2023/04/11', 'Professional Disposables International, Inc.', 'CN', '2023/02/03', 5);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity) values ('Charlie Chan in Dangerous Money', '2023/03/11', 'Amerisource Bergen', 'DE', '4/17/2022', 6);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Too Late the Hero', '2023/05/11', 'Nelco Laboratories, Inc.', 7.60, '2023/02/03', 150,5,4);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Breath, The (Nefes: Vatan sagolsun)', '2023/06/11', 'Banner Pharmacaps Inc', 9.20, '2023/02/03', 200,6,6);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('300', '2023/07/11', 'Mycone Dental Supply Co., Inc DBA Keystone Industries', 5.90, '2023/02/03', 260,2,4);
+
+
