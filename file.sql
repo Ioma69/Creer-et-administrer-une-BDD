@@ -161,8 +161,36 @@ insert into movies (title, duration, release_date, synopsis, directed_by, projec
 
 
 
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Too Late the Hero', '2023/05/11', 'Nelco Laboratories, Inc.', 7.60, '2023/02/03', 150,5,4);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Breath, The (Nefes: Vatan sagolsun)', '2023/06/11', 'Banner Pharmacaps Inc', 9.20, '2023/02/03', 200,6,6);
-insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('300', '2023/07/11', 'Mycone Dental Supply Co., Inc DBA Keystone Industries', 5.90, '2023/02/03', 260,2,4);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Too Late the Hero', '2023/05/11', 'CB', 7.60, '2023/02/03', 150,5,4);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('Breath, The (Nefes: Vatan sagolsun)', '2023/06/11', 'CB', 9.20, '2023/02/03', 200,6,6);
+insert into booking (movie, date_reservation, type_payment, total_price, date_payment, place_quantity,projections_id,customers_id) values ('300', '2023/07/11', 'CB', 5.90, '2023/02/03', 260,2,4);
 
 
+-- montrer les différents tarifs disponibles :
+
+SELECT `customers`.`status`, `booking`.`total_price`
+FROM `customers` 
+	LEFT JOIN `booking` ON `booking`.`customers_id` = `customers`.`customers_id`
+WHERE `booking`.`total_price`;
+
+-- connaitre les différents administrateurs et les cinémas associés : 
+
+SELECT `admins`.*, `cinemas`.`name`, `users`.`first_name`
+FROM `admins` 
+	LEFT JOIN `cinemas` ON `cinemas`.`admins_id` = `admins`.`admins_id` 
+	LEFT JOIN `users` ON `admins`.`admins_id` = `users`.`id`;
+
+-- connaitre par rapport à une date de projection les places restantes d'une salle :
+
+SELECT `projections`.`projection_time`, `moviesroom`.`place_capacity`
+FROM `projections` 
+	LEFT JOIN `moviesroom` ON `projections`.`moviesroom_id` = `moviesroom`.`movies_id`
+WHERE `projections`.`projection_time` = '2023/12/01 11:00:00';
+
+--affiche les reservations avec le nom des films ainsi que les noms des cinémas associés
+
+SELECT `projections`.*, `booking`.`movie`, `moviesroom`.`cinemas_id`, `cinemas`.`name`
+FROM `projections` 
+	LEFT JOIN `booking` ON `booking`.`projections_id` = `projections`.`projections_id` 
+	LEFT JOIN `moviesroom` ON `projections`.`moviesroom_id` = `moviesroom`.`movies_id` 
+	LEFT JOIN `cinemas` ON `moviesroom`.`cinemas_id` = `cinemas`.`cinemas_id`;
