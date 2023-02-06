@@ -20,7 +20,7 @@ CREATE TABLE users (
 
 
 CREATE TABLE customers (
-    status VARCHAR(10) NOT NULL,
+    status VARCHAR(11) NOT NULL,
     customers_id INT(11) NOT NULL PRIMARY KEY,
     FOREIGN KEY (customers_id) REFERENCES users(id)
     
@@ -40,9 +40,9 @@ CREATE TABLE cinemas (
     cinemas_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(20) NOT NULL,
     adress VARCHAR(250) NOT NULL,
-    zipcode VARCHAR(5) NOT NULL,
+    zipcode INT(5) NOT NULL,
     city VARCHAR(60) NOT NULL,
-    phone int(10) NOT NULL,
+    phone INT(10) NOT NULL,
     admins_id INT(11),
     FOREIGN KEY (admins_id) REFERENCES admins(admins_id)
 
@@ -101,12 +101,12 @@ CREATE TABLE booking (
 
 -- insertion des données dans le base de données --
 
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Sondra', 'Neeves', '1980/12/01', 'sneeves0@storify.fr', 'sneeves0', 'sH80nYGrRrJ');
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Brittne', 'Bourdel', '1982/11/02', 'bbourdel1@about.fr', 'bbourdel1', 'BQnJbikTgAE');
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Catina', 'Farrears', '1970/09/05', 'cfarrears2@ucla.fr', 'cfarrears2', 'plBHmQz');
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Duane', 'Baldazzi', '1985/08/01', 'dbaldazzi3@unesco.fr', 'dbaldazzi3', 'hw74L9Dn2GP');
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Lissy', 'Cuerda', '1985/07/01', 'lcuerda4@arizona.fr', 'lcuerda4', '7R861WPu');
-insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Uri', 'Brigstock', '1985/12/01', 'ubrigstock5@ning.fr', 'ubrigstock5', 'ueXIeslrrIFd');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Sondra', 'Neeves', '1980/12/01', 'sneeves0@storify.fr', 'sneeves0', '$2y$10$jPsBRe7LNOy9ZkF0lzeLe.CO8uS1ssmER48pl2o0GPozOdjwZf3bu');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Brittne', 'Bourdel', '1982/11/02', 'bbourdel1@about.fr', 'bbourdel1', '$2y$10$YnqlxFZjUhnc.diIgmYKDealRf1BAijRtqbRZFyBbdpBzyzS5KZoS');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Catina', 'Farrears', '1970/09/05', 'cfarrears2@ucla.fr', 'cfarrears2', '$2y$10$71w.2.mMWImkqn87Qhzk4OOKpyqLYmJJhPECZD0URz2gWAn7/vG6q');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Duane', 'Baldazzi', '1985/08/01', 'dbaldazzi3@unesco.fr', 'dbaldazzi3', '$2y$10$1cfIYvwKhw4pkM3FAgjWPOMIGNfdZvW76W7HJoN890PPf8n/4zJ6m');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Lissy', 'Cuerda', '1985/07/01', 'lcuerda4@arizona.fr', 'lcuerda4', '$2y$10$6BojVRk/kGbi2.ZybM0c6eX4uDQepINLsZYycdqJgGDjiLFOpXfxy');
+insert into users (first_name, last_name, date_of_birth, email, pseudo, password) values ('Uri', 'Brigstock', '1985/12/01', 'ubrigstock5@ning.fr', 'ubrigstock5', ' $2y$10$Vdw0g4P62.CoPUf0RncWB.aoI8QSgnF.RgXW8HrO8VCGy..JFL2U2');
 
 
 insert into customers (customers_id,status) values (2 , 'Etudiant');
@@ -187,10 +187,50 @@ FROM `projections`
 	LEFT JOIN `moviesroom` ON `projections`.`moviesroom_id` = `moviesroom`.`movies_id`
 WHERE `projections`.`projection_time` = '2023/12/01 11:00:00';
 
---affiche les reservations avec le nom des films ainsi que les noms des cinémas associés
+--affiche les reservations avec le nom des films ainsi que les noms des cinémas associés :
 
 SELECT `projections`.*, `booking`.`movie`, `moviesroom`.`cinemas_id`, `cinemas`.`name`
 FROM `projections` 
 	LEFT JOIN `booking` ON `booking`.`projections_id` = `projections`.`projections_id` 
 	LEFT JOIN `moviesroom` ON `projections`.`moviesroom_id` = `moviesroom`.`movies_id` 
 	LEFT JOIN `cinemas` ON `moviesroom`.`cinemas_id` = `cinemas`.`cinemas_id`;
+
+
+
+-- creer un utilisateur et lui accorder des privileges sur la base de données :
+
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'mot_de_passe';
+
+GRANT ALL PRIVILEGES ON * . * TO 'admin'@'localhost';
+
+FLUSH PRIVILEGES
+
+
+
+-- creer un utilisateur et lui accorder des privileges de lecture seule : 
+
+
+create user 'lambda'@'localhost' IDENTIFIED BY 'Password'
+
+grant select on Theater.* to 'lambda'@'localhost'
+
+
+
+-- voir les privileges accordés à un utilisateur :
+
+
+SHOW GRANTS FOR 'admin'@'localhost';
+
+SHOW GRANTS FOR 'lambda'@'localhost';
+
+-- Sauvegarder la base de données : 
+
+mysqldump -u root -p theater --complete-insert --result-file=c:/GAMES/test.sql
+
+
+
+
+ 
+
+   
